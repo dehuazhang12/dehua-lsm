@@ -1,0 +1,105 @@
+# Build directories
+build/
+bin/
+lib/
+obj/
+
+# Cache directories
+.cache/
+.clangd/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+compile_commands.json
+
+# Executables
+*.exe
+*.out
+*.app
+server
+TestSkipList
+
+# Libraries
+*.a
+*.so
+*.dylib
+
+# Object files
+*.o
+*.obj
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# IDE and editor files
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/c_cpp_properties.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Log files
+*.log
+logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+example_db/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Core dumps
+core
+core.*
+
+# Configuration files (if they contain sensitive data)
+# *.config
+# *.toml
+
+# Coverage files
+*.gcda
+*.gcno
+*.gcov
+coverage/
+
+# Valgrind output
+*.valgrind
+
+# Profiling data
+*.prof
+gmon.out
+
+# Documentation build
+docs/_build/
+docs/html/
+docs/latex/
+
+# Package files
+*.tar.gz
+*.zip
+*.rar
