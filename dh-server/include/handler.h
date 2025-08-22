@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-using namespace ::dehua_lsm;
+using namespace dehua_lsm;
 
 enum class OPS {
   CONFIG,

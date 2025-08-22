@@ -6,11 +6,10 @@
 #include <string>
 #include <vector>
 
-// 假设这些头文件和实现已经存在，并且与您的 Muduo 版本兼容
 #include "redisWrapper.h"
 #include "handler.h"
 
-// 简单的日志宏，替代 Muduo 的 LOG_INFO
+// 简单的日志宏
 #define ASYNC_REDIS_SERVER_LOG_INFO(msg)                                       \
   std::cout << "[INFO] " << msg << std::endl;
 #define ASYNC_REDIS_SERVER_LOG_DEBUG(                                          \
@@ -183,7 +182,7 @@ private:
     // 处理命令 (与 Muduo 版本相同)
     switch (string2Ops(args[0])) {
     case OPS::CONFIG:
-      return "*0\r\n";
+      return "*2\r\n$7\r\ntimeout\r\n$1\r\n0\r\n";
     case OPS::PING:
       return "+PONG\r\n";
     case OPS::FLUSHALL:
