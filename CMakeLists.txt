@@ -16,4 +16,4 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 # 添加子目录
 add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(server)
+add_subdirectory(dh-server)
