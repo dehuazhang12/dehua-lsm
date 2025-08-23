@@ -67,4 +67,4 @@ public:
   bool sync();
 };
 } // namespace dehua_lsm
-#endif // DEHUA_LSM_FILEOBJ_H
+#endif // FILEOBJ_H

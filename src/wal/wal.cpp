@@ -1,5 +1,5 @@
 // src/wal/wal.cpp
-
+// 修改代码缩进为4个空格
 #include "wal.h"
 #include <algorithm>
 #include <cstdint>
@@ -16,19 +16,19 @@ WAL::WAL(const std::string &log_dir, size_t buffer_size,
     : buffer_size_(buffer_size), max_finished_tranc_id_(max_finished_tranc_id),
       stop_cleaner_(false), clean_interval_(clean_interval),
       file_size_limit_(file_size_limit) {
-  active_log_path_ = log_dir + "/wal.0";
-  log_file_ = FileObj::open(active_log_path_, true);
+    active_log_path_ = log_dir + "/wal.0";
+    log_file_ = FileObj::open(active_log_path_, true);
 
-  cleaner_thread_ = std::thread(&WAL::cleaner, this);
+    cleaner_thread_ = std::thread(&WAL::cleaner, this);
 }
 
 WAL::~WAL() {
   // 先将缓冲区所有内容强制刷入
-  log({}, true);
-  {
-    std::lock_guard<std::mutex> lock(mutex_);
-    stop_cleaner_ = true;
-  }
+    log({}, true);
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        stop_cleaner_ = true;
+    }
 
   if (cleaner_thread_.joinable()) {
     cleaner_thread_.join();
@@ -36,9 +36,10 @@ WAL::~WAL() {
   log_file_.sync();
 }
 
+// 恢复 WAL 文件中的记录
 std::map<uint64_t, std::vector<Record>>
 WAL::recover(const std::string &log_dir, uint64_t max_flushed_tranc_id) {
-  std::map<uint64_t, std::vector<Record>> tranc_records{};
+  std::map<uint64_t, std::vector<Record>> tranc_records{}; // map : tranc_id -> records belongings
 
   // 引擎启动时判断
   if (!std::filesystem::exists(log_dir)) {
@@ -70,8 +71,8 @@ WAL::recover(const std::string &log_dir, uint64_t max_flushed_tranc_id) {
   // 读取所有的记录
   for (const auto &wal_path : wal_paths) {
     auto wal_file = FileObj::open(wal_path, false);
-    auto wal_records_slice = wal_file.read_to_slice(0, wal_file.size());
-    auto records = Record::decode(wal_records_slice);
+    std::vector<uint8_t> wal_records_slice = wal_file.read_to_slice(0, wal_file.size());
+    std::vector<Record> records = Record::decode(wal_records_slice);
     for (const auto &record : records) {
       if (record.getTrancId() > max_flushed_tranc_id) {
         // 如果记录的 tranc_id 大于 max_finished_tranc_id, 才需要尝试恢复
@@ -125,7 +126,6 @@ void WAL::log(const std::vector<Record> &records, bool force_flush) {
 void WAL::cleaner() {
   while (true) {
     {
-      // 睡眠 clean_interval_ s
       std::this_thread::sleep_for(std::chrono::seconds(clean_interval_));
       if (stop_cleaner_) {
         break;
@@ -212,8 +212,6 @@ void WAL::reset_file() {
                      std::to_string(seq);
 
   // 创建新的文件
-  // ? 如果不注释下面这行, debug 模式下 test_wal 能通过但 release 模式下报错
-  // log_file_.~FileObj();
   log_file_ = FileObj::create_and_write(active_log_path_, {});
 }
 } // namespace dehua_lsm

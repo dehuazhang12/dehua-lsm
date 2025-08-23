@@ -29,7 +29,7 @@ public:
   // 将记录添加到缓冲区
   void log(const std::vector<Record> &records, bool force_flush = false);
 
-  // 强制将缓冲区中的数据写入 WAL 文件
+  // 将缓冲区中的数据写入 WAL 文件
   void flush();
 
   void set_max_finished_tranc_id(uint64_t max_finished_tranc_id);
@@ -40,15 +40,15 @@ private:
   void reset_file();
 
 protected:
-  std::string active_log_path_;
-  FileObj log_file_;
-  size_t file_size_limit_;
-  std::mutex mutex_;
-  std::vector<Record> log_buffer_;
-  size_t buffer_size_;
-  std::thread cleaner_thread_;
-  uint64_t max_finished_tranc_id_;
-  std::atomic<bool> stop_cleaner_;
+  std::string active_log_path_; // 当前活动的 WAL 文件路径
+  FileObj log_file_;             // 当前活动的 WAL 文件对象
+  size_t file_size_limit_;       // WAL 文件大小限制
+  std::mutex mutex_;             // 保护 WAL 的互斥锁
+  std::vector<Record> log_buffer_; // WAL 缓冲区
+  size_t buffer_size_;           // WAL 缓冲区大小
+  std::thread cleaner_thread_;   // 清理线程
+  uint64_t max_finished_tranc_id_; // 最大已完成事务 ID
+  std::atomic<bool> stop_cleaner_; // 停止清理线程标志
   uint64_t clean_interval_;
 };
 } // namespace dehua_lsm
